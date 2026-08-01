@@ -1,10 +1,16 @@
 ---
+import { getCollection } from 'astro:content';
+
 export async function getStaticPaths() {
   const posts = await Astro.glob('../../../noticias/*.md');
-  return posts.map((post) => ({
-    params: { slug: post.file.split('/').pop().replace('.md', '') },
-    props: { post },
-  }));
+  return posts.map((post) => {
+    // Extrai o nome do arquivo para usar como slug na URL
+    const fileName = post.file.split('/').pop().replace('.md', '');
+    return {
+      params: { slug: fileName },
+      props: { post },
+    };
+  });
 }
 
 const { post } = Astro.props;
@@ -18,8 +24,10 @@ const { post } = Astro.props;
   <body>
     <article style="max-width: 800px; margin: 0 auto; padding: 20px;">
       <h1>{post.frontmatter.title}</h1>
+      <p><em>{post.frontmatter.date || ''}</em></p>
       <hr />
-      <post.Content />
+      {/* Exibe o HTML compilado do Markdown de forma limpa */}
+      <div set:html={post.compiledContent()} />
     </article>
   </body>
 </html>
