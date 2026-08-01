@@ -1,0 +1,6 @@
+---
+import BaseLayout from "./BaseLayout.astro"; import type { Noticia } from "../data/noticias";
+const {noticia}=Astro.props as {noticia:Noticia};
+const schema={"@context":"https://schema.org","@type":"NewsArticle",headline:noticia.titulo,datePublished:noticia.data,dateModified:noticia.atualizada||noticia.data,author:{"@type":"Person",name:noticia.autor},articleSection:noticia.categoria,image:noticia.imagem};
+---
+<BaseLayout title={`${noticia.titulo} | PortalNews`} description={noticia.resumo}><script type="application/ld+json" set:html={JSON.stringify(schema)}/><slot/></BaseLayout>

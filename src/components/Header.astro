@@ -1,0 +1,17 @@
+<header class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95">
+<div class="container-page flex h-16 items-center gap-4">
+<a href="/" class="shrink-0 text-xl font-black tracking-tight">PORTAL<span class="text-blue-600">NEWS</span></a>
+<nav class="hidden flex-1 items-center gap-5 text-sm font-medium lg:flex">
+<a href="/#ultimas">Últimas</a><a href="/#brasil">Brasil</a><a href="/#mundo">Mundo</a><a href="/#economia">Economia</a><a href="/#tecnologia">Tecnologia</a><a href="/#esportes">Esportes</a>
+</nav>
+<form action="/" class="hidden sm:block"><input name="q" aria-label="Buscar" placeholder="Buscar" class="w-36 rounded-lg border border-slate-300 bg-transparent px-3 py-2 text-sm dark:border-slate-700"/></form>
+<button id="theme-toggle" aria-label="Alternar modo escuro" class="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700">◐</button>
+<button class="lg:hidden rounded-lg border border-slate-300 px-3 py-2 dark:border-slate-700" aria-label="Abrir menu">☰</button>
+</div></header>
+<script is:inline>
+const b=document.querySelector('#theme-toggle');
+const saved=localStorage.getItem('theme');
+const dark=saved?saved==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+document.documentElement.classList.toggle('dark',dark);
+b?.addEventListener('click',()=>{const d=document.documentElement.classList.toggle('dark');localStorage.setItem('theme',d?'dark':'light')});
+</script>

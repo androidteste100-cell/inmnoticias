@@ -1,0 +1,8 @@
+---
+import type { Noticia } from "../data/noticias";
+const { noticia } = Astro.props as {noticia:Noticia};
+---
+<article class="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+<a href={`/noticia/${noticia.slug}`}><img src={noticia.imagem} width="900" height="560" loading="lazy" alt="" class="aspect-[16/10] w-full object-cover transition duration-300 group-hover:scale-[1.02]"/></a>
+<div class="p-5"><span class="text-xs font-bold uppercase tracking-wide text-blue-600">{noticia.categoria}</span><h2 class="mt-2 text-lg font-bold leading-snug"><a href={`/noticia/${noticia.slug}`}>{noticia.titulo}</a></h2><p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{noticia.resumo}</p><div class="mt-4 text-xs text-slate-500">{noticia.tempoLeitura} min de leitura</div></div>
+</article>

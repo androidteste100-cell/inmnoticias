@@ -1,0 +1,8 @@
+---
+type Props = { type: "banner-top"|"in-article"|"sidebar" };
+const { type } = Astro.props;
+const heights = {"banner-top":"min-h-[90px]","in-article":"min-h-[250px]","sidebar":"min-h-[600px]"};
+---
+<div class={`my-8 flex w-full ${heights[type]} items-center justify-center rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-700 dark:bg-slate-800`} aria-label="Publicidade">
+  <span class="text-xs text-slate-500 dark:text-slate-400">Publicidade</span>
+</div>

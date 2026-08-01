@@ -1,0 +1,6 @@
+---
+import { noticias } from "../data/noticias";
+import AdSlot from "./AdSlot.astro";
+const mais = noticias.filter(n=>n.maisLida).slice(0,3);
+---
+<aside class="lg:sticky lg:top-24 lg:self-start"><section class="rounded-xl border border-slate-200 p-5 dark:border-slate-800"><h2 class="text-lg font-extrabold">Mais lidas</h2><ol class="mt-4 space-y-4">{mais.map((n,i)=><li class="flex gap-3"><span class="text-xl font-black text-blue-600">0{i+1}</span><a href={`/noticia/${n.slug}`} class="font-semibold leading-snug">{n.titulo}</a></li>)}</ol></section><AdSlot type="sidebar"/></aside>

@@ -1,0 +1,5 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro"; import HeroNews from "../components/HeroNews.astro"; import NewsCard from "../components/NewsCard.astro"; import AdSlot from "../components/AdSlot.astro"; import {noticias} from "../data/noticias";
+const q=Astro.url.searchParams.get("q")?.toLowerCase(); const lista=q?noticias.filter(n=>(n.titulo+n.resumo+n.categoria).toLowerCase().includes(q)):noticias;
+---
+<BaseLayout title="PortalNews — Notícias e informação" description="Portal moderno de notícias."><HeroNews principal={lista[0]||noticias[0]} secundarias={(lista.length?lista:noticias).slice(1,4)}/><AdSlot type="banner-top"/><section id="ultimas"><div class="mb-6 flex items-end justify-between"><div><p class="text-sm font-bold uppercase text-blue-600">Atualidades</p><h2 class="text-2xl font-extrabold">Notícias recentes</h2></div></div>{q&&<p class="mb-4 text-sm text-slate-500">Resultados para “{q}”</p>}<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{(lista.length?lista:noticias).slice(4).map(n=><NewsCard noticia={n}/>)}</div></section></BaseLayout>
