@@ -1,6 +1,26 @@
 ---
-import ArticleLayout from "../../layouts/ArticleLayout.astro"; import Sidebar from "../../components/Sidebar.astro"; import AIResumo from "../../components/AIResumo.astro"; import AdSlot from "../../components/AdSlot.astro"; import {noticias,getNoticia} from "../../data/noticias";
-export function getStaticPaths(){return noticias.map(n=>({params:{slug:n.slug},props:{noticia:n}}))}
-const {noticia}=Astro.props; const data=new Date(noticia.data+"T12:00:00").toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"});
+export async function getStaticPaths() {
+  const posts = await Astro.glob('../../../noticias/*.md');
+  return posts.map((post) => ({
+    params: { slug: post.file.split('/').pop().replace('.md', '') },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
 ---
-<ArticleLayout noticia={noticia}><div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]"><article><header><span class="text-sm font-bold uppercase text-blue-600">{noticia.categoria}</span><h1 class="mt-2 text-3xl font-extrabold tracking-tight sm:text-5xl">{noticia.titulo}</h1>{noticia.subtitulo&&<p class="mt-4 text-xl text-slate-600 dark:text-slate-400">{noticia.subtitulo}</p>}<div class="mt-5 text-sm text-slate-500">Por {noticia.autor} · {data} · {noticia.tempoLeitura} min de leitura</div></header><img src={noticia.imagem} width="1400" height="800" alt="" class="mt-7 aspect-[16/9] w-full rounded-2xl object-cover"/><AIResumo texto={noticia.resumoIA}/><AdSlot type="banner-top"/><div class="prose prose-lg max-w-none dark:prose-invert">{noticia.conteudo.map((p,i)=><><p>{p}</p>{(i+1)%3===0&&i<noticia.conteudo.length-2&&<AdSlot type="in-article"/>}</>)}</div></article><Sidebar/></div></ArticleLayout>
+
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <title>{post.frontmatter.title || "Notícia"}</title>
+  </head>
+  <body>
+    <article style="max-width: 800px; margin: 0 auto; padding: 20px;">
+      <h1>{post.frontmatter.title}</h1>
+      <hr />
+      <Content />
+    </article>
+  </body>
+</html>
